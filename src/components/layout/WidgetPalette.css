@@ -1,0 +1,58 @@
+.widget-palette {
+  width: 300px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.widget-palette h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.palette-description {
+  margin: 0 0 20px 0;
+  font-size: 0.875rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.palette-widgets {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.palette-tips {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.palette-tips h4 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.palette-tips ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.813rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.palette-tips li {
+  margin-bottom: 6px;
+}
+
+.palette-tips li:last-child {
+  margin-bottom: 0;
+}

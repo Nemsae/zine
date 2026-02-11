@@ -1,0 +1,54 @@
+.draggable-widget {
+  position: relative;
+  cursor: move;
+  transition: all 0.2s ease;
+}
+
+.draggable-widget:hover {
+  transform: scale(1.02);
+}
+
+.draggable-widget:hover .delete-btn {
+  opacity: 1;
+}
+
+.draggable-widget.dragging {
+  cursor: grabbing;
+  transform: rotate(5deg);
+  z-index: 1000;
+}
+
+.canvas-widget {
+  margin: 16px;
+}
+
+.palette-widget {
+  margin: 8px;
+  max-width: 200px;
+}
+
+.delete-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background-color: #e53e3e;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.delete-btn:hover {
+  background-color: #c53030;
+  transform: scale(1.1);
+}

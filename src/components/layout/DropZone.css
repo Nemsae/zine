@@ -1,0 +1,56 @@
+.drop-zone {
+  flex: 1;
+  min-height: 600px;
+  background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+  border: 3px dashed #cbd5e0;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.drop-zone.can-drop {
+  border-color: #4299e1;
+  background: linear-gradient(to bottom, #ebf8ff, #bee3f8);
+}
+
+.drop-zone.drop-over {
+  border-color: #3182ce;
+  background: linear-gradient(to bottom, #dbeafe, #90cdf4);
+  box-shadow: 0 0 20px rgba(66, 153, 225, 0.2);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #718096;
+  padding: 40px;
+}
+
+.empty-state h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.empty-state p {
+  margin: 0 0 24px 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 400px;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  opacity: 0.5;
+}
+
+.widget-container {
+  position: absolute;
+  z-index: 1;
+}

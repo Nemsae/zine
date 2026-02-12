@@ -1,8 +1,9 @@
 import React from 'react';
 import { WidgetPalette, DropZone } from './layout';
+import { ZineCanvasProps } from '../types';
 import './ZineCanvas.css';
 
-const ZineCanvas = ({
+const ZineCanvas: React.FC<ZineCanvasProps> = ({
   widgets,
   editingWidget,
   onEdit,

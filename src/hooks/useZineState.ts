@@ -1,13 +1,14 @@
 import { useReducer, useEffect } from 'react';
+import { ZineState, ZineAction, UseZineStateReturn } from '../types';
 
-const initialState = {
+const initialState: ZineState = {
   widgets: [],
   editingWidget: null,
   isLoading: false,
   error: null
 };
 
-const zineReducer = (state, action) => {
+const zineReducer = (state: ZineState, action: ZineAction): ZineState => {
   switch (action.type) {
     case 'ADD_WIDGET': {
       const newWidget = {
@@ -121,7 +122,7 @@ const zineReducer = (state, action) => {
   }
 };
 
-export const useZineState = () => {
+export const useZineState = (): UseZineStateReturn => {
   const [state, dispatch] = useReducer(zineReducer, initialState);
 
   // Load draft from localStorage on mount
@@ -165,40 +166,40 @@ export const useZineState = () => {
     }
   }, [state.widgets]);
 
-  const addWidget = (widget) => {
+  const addWidget = (widget: Omit<import('../types').Widget, 'createdAt'>): void => {
     dispatch({ type: 'ADD_WIDGET', payload: widget });
   };
 
-  const updateWidget = (id, updates) => {
+  const updateWidget = (id: string, updates: Partial<import('../types').Widget>): void => {
     dispatch({ type: 'UPDATE_WIDGET', payload: { id, updates } });
   };
 
-  const deleteWidget = (id) => {
+  const deleteWidget = (id: string): void => {
     dispatch({ type: 'DELETE_WIDGET', payload: { id } });
   };
 
-  const startEditing = (id) => {
+  const startEditing = (id: string): void => {
     dispatch({ type: 'START_EDITING', payload: { id } });
   };
 
-  const stopEditing = () => {
+  const stopEditing = (): void => {
     dispatch({ type: 'STOP_EDITING' });
   };
 
-  const moveWidget = (id, position) => {
+  const moveWidget = (id: string, position: { x: number; y: number }): void => {
     dispatch({ type: 'MOVE_WIDGET', payload: { id, position } });
   };
 
-  const reorderWidgets = (sourceIndex, destinationIndex) => {
+  const reorderWidgets = (sourceIndex: number, destinationIndex: number): void => {
     dispatch({ type: 'REORDER_WIDGETS', payload: { sourceIndex, destinationIndex } });
   };
 
-  const clearAll = () => {
+  const clearAll = (): void => {
     dispatch({ type: 'CLEAR_ALL' });
     localStorage.removeItem('zine-draft');
   };
 
-  const saveWidgetContent = (id, content) => {
+  const saveWidgetContent = (id: string, content: string): void => {
     updateWidget(id, { content });
     stopEditing();
   };

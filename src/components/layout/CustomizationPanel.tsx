@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { WidgetPaletteProps } from '../../types';
 import './CustomizationPanel.css';
 
-const CustomizationPanel = ({ onThemeChange, currentTheme }) => {
+const CustomizationPanel: React.FC<WidgetPaletteProps> = ({ onThemeChange, currentTheme }) => {
   const [activeTab, setActiveTab] = useState('background');
 
   const predefinedThemes = [

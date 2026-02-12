@@ -1,9 +1,10 @@
 import React from 'react';
 import { Droppable } from '@hello-pangea/dnd';
 import DraggableWidget from './DraggableWidget';
+import { DropZoneProps } from '../../types';
 import './DropZone.css';
 
-const DropZone = ({ 
+const DropZone: React.FC<DropZoneProps> = ({ 
   widgets, 
   editingWidget, 
   onEdit, 

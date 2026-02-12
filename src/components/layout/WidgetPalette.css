@@ -26,6 +26,8 @@
   flex-direction: column;
   gap: 12px;
   margin-bottom: 24px;
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 .palette-tips {

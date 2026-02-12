@@ -2,9 +2,10 @@ import React from 'react';
 import { DragDropContext } from '@hello-pangea/dnd';
 import ZineCanvas from './components/ZineCanvas';
 import { useZineState } from './hooks/useZineState';
+import { Theme, DragEndResult } from './types';
 import './App.css';
 
-function App() {
+function App(): JSX.Element {
   const {
     widgets,
     editingWidget,
@@ -19,13 +20,13 @@ function App() {
     reorderWidgets
   } = useZineState();
 
-  const [currentTheme, setCurrentTheme] = React.useState({
+  const [currentTheme, setCurrentTheme] = React.useState<Theme>({
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     fontFamily: 'Arial, sans-serif',
     widgetShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
   });
 
-  const handleDragEnd = (result) => {
+  const handleDragEnd = (result: DragEndResult) => {
     const { source, destination, draggableId } = result;
     
     // If dropped outside a droppable area, do nothing

@@ -3,9 +3,10 @@ import { Droppable } from '@hello-pangea/dnd';
 import { HeadingWidget, TextWidget, ContentWidget } from '../widgets';
 import DraggableWidget from './DraggableWidget';
 import CustomizationPanel from './CustomizationPanel';
+import { WidgetPaletteProps } from '../../types';
 import './WidgetPalette.css';
 
-const WidgetPalette = ({ onThemeChange, currentTheme }) => {
+const WidgetPalette: React.FC<WidgetPaletteProps> = ({ onThemeChange, currentTheme }) => {
   const paletteWidgets = [
     {
       id: 'palette-heading',

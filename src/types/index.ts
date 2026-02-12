@@ -38,9 +38,11 @@ export interface WidgetProps {
 }
 
 export interface DraggableWidgetProps extends WidgetProps {
+  widget: Widget;
   type: string;
   isFromPalette?: boolean;
   index: number;
+  onDelete?: (id: string) => void;
 }
 
 export interface DropZoneProps {

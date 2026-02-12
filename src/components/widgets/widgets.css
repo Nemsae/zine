@@ -1,0 +1,125 @@
+.widget-heading {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: var(--widget-shadow, 0 4px 12px rgba(0, 0, 0, 0.15));
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.widget-heading:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.widget-heading h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.widget-heading.editing {
+  background: white;
+  border: 2px solid #4299e1;
+}
+
+.widget-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: inherit;
+  background: transparent;
+}
+
+.widget-text {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: var(--widget-shadow, 0 4px 12px rgba(0, 0, 0, 0.15));
+  min-height: 80px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.widget-text:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.widget-text p {
+  margin: 0;
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.widget-text.editing {
+  background: white;
+  border: 2px solid #4299e1;
+}
+
+.widget-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-family: inherit;
+  background: transparent;
+  resize: vertical;
+  min-height: 60px;
+}
+
+.widget-content {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: var(--widget-shadow, 0 4px 12px rgba(0, 0, 0, 0.15));
+  min-height: 120px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.widget-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.widget-content .content-text {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+.widget-content.editing {
+  background: white;
+  border: 2px solid #4299e1;
+}
+
+.content-widget {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: var(--widget-shadow, 0 4px 12px rgba(0, 0, 0, 0.15));
+  min-height: 60px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.content-widget:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.content-widget .content-text {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.5;
+}

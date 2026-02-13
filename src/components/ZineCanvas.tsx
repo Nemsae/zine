@@ -13,8 +13,18 @@ const ZineCanvas: React.FC<ZineCanvasProps> = ({
   onThemeChange,
   currentTheme
 }) => {
+  const [footerVisible, setFooterVisible] = React.useState(() => {
+    const stored = localStorage.getItem('footerVisible');
+    return stored !== 'false'; // Default to true unless explicitly hidden
+  });
+
+  const handleFooterClose = () => {
+    setFooterVisible(false);
+    localStorage.setItem('footerVisible', 'false');
+  };
+
   return (
-    <div className="zine-canvas">
+    <div className="zine-canvas" style={{ fontFamily: currentTheme.fontFamily }}>
       <header className="zine-header">
         <h1>🎨 Zine Builder</h1>
         <div className="header-controls">
@@ -39,13 +49,17 @@ const ZineCanvas: React.FC<ZineCanvasProps> = ({
             onSave={onSave}
             onCancel={onCancel}
             onDelete={onDelete}
+            onDrop={() => {}}
           />
         </section>
       </main>
       
-      <footer className="zine-footer">
-        <p>💡 Tip: Your work is automatically saved locally!</p>
-      </footer>
+      {footerVisible && (
+        <footer className="zine-footer">
+          <p>💡 Tip: Your work is automatically saved locally!</p>
+          <button className="footer-close" onClick={handleFooterClose}>×</button>
+        </footer>
+      )}
     </div>
   );
 };

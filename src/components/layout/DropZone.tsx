@@ -39,8 +39,8 @@ const DropZone: React.FC<DropZoneProps> = ({
               className="widget-container"
               style={{
                 position: 'absolute',
-                left: widget.position?.x || 0,
-                top: widget.position?.y || 0,
+                left: `${widget.position?.x || 0}px`,
+                top: `${widget.position?.y || 0}px`,
               }}
             >
               <DraggableWidget
@@ -51,6 +51,8 @@ const DropZone: React.FC<DropZoneProps> = ({
                 onSave={onSave}
                 onCancel={onCancel}
                 onDelete={onDelete}
+                id={widget.id}
+                content={widget.content}
                 index={index}
               />
             </div>

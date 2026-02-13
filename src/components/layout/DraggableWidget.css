@@ -14,8 +14,9 @@
 
 .draggable-widget.dragging {
   cursor: grabbing;
-  transform: rotate(5deg);
-  z-index: 1000;
+  transform: rotate(5deg) scale(1.05);
+  z-index: 1003;
+  opacity: 0.9;
 }
 
 .canvas-widget {

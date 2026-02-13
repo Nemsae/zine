@@ -1,120 +1,86 @@
-import React from 'react';
-import { DragDropContext } from '@hello-pangea/dnd';
-import ZineCanvas from './components/ZineCanvas';
-import { useZineState } from './hooks/useZineState';
-import { Theme, DragEndResult } from './types';
-import './App.css';
+import React, { useState, useMemo, useCallback } from 'react';
+import { DocumentStore } from './core/store/DocumentStore';
+import { SessionStore } from './core/store/SessionStore';
+import { CommandManager } from './core/commands/CommandManager';
+import { ZineCanvas } from './components/canvas';
+import { Toolbar, PropertiesPanel } from './components/ui';
+import { ToolType } from './core/types';
 
-function App(): JSX.Element {
-  const {
-    widgets,
-    editingWidget,
-    isLoading,
-    error,
-    addWidget,
-    updateWidget,
-    deleteWidget,
-    startEditing,
-    stopEditing,
-    saveWidgetContent,
-    reorderWidgets
-  } = useZineState();
+const documentStore = new DocumentStore();
+const sessionStore = new SessionStore();
 
-  const [currentTheme, setCurrentTheme] = React.useState<Theme>({
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    fontFamily: 'Arial, sans-serif',
-    widgetShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
-  });
+function App(): React.JSX.Element {
+  const [currentTool, setCurrentTool] = useState<ToolType>('select');
+  const [canUndo, setCanUndo] = useState(false);
+  const [canRedo, setCanRedo] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
-  const handleDragEnd = (result: DragEndResult) => {
-    const { source, destination, draggableId } = result;
-    
-    // If dropped outside a droppable area, do nothing
-    if (!destination) {
-      return;
-    }
-    
-    // Handle drop from palette to canvas
-    if (source.droppableId === 'palette' && destination.droppableId === 'canvas') {
-      const paletteWidgets = [
-        { id: 'palette-heading', type: 'heading', content: 'Sample Heading' },
-        { id: 'palette-text', type: 'text', content: 'Sample text blurb for your zine page.' },
-        { id: 'palette-content', type: 'content', content: 'Sample longer content for your article or blog post. This can include multiple paragraphs and detailed information.' }
-      ];
-      
-      const paletteWidget = paletteWidgets.find(w => w.id === draggableId);
-      if (paletteWidget) {
-        addWidget({
-          ...paletteWidget,
-          id: `${paletteWidget.type}-${Date.now()}`,
-          position: { x: destination.index * 50, y: destination.index * 30 }
-        });
-      }
-      return;
-    }
-    
-// Handle reordering within canvas
-    if (source.droppableId === 'canvas' && destination.droppableId === 'canvas') {
-      reorderWidgets(source.index, destination.index);
-      return;
-    }
-  };
+  const commandManager = useMemo(() => {
+    return new CommandManager(() => {
+      setCanUndo(commandManager.canUndo());
+      setCanRedo(commandManager.canRedo());
+    });
+  }, []);
 
-  const handleEdit = (id) => {
-    startEditing(id);
-  };
+  const handleToolChange = useCallback((tool: ToolType) => {
+    sessionStore.setCurrentTool(tool);
+    setCurrentTool(tool);
+  }, []);
 
-  const handleSave = (id, content) => {
-    saveWidgetContent(id, content);
-  };
+  const handleUndo = useCallback(() => {
+    commandManager.undo();
+    setCanUndo(commandManager.canUndo());
+    setCanRedo(commandManager.canRedo());
+  }, [commandManager]);
 
-  const handleCancel = () => {
-    stopEditing();
-  };
+  const handleRedo = useCallback(() => {
+    commandManager.redo();
+    setCanUndo(commandManager.canUndo());
+    setCanRedo(commandManager.canRedo());
+  }, [commandManager]);
 
-  const handleDelete = (id) => {
-    deleteWidget(id);
-  };
-
-  const handleThemeChange = (newTheme) => {
-    setCurrentTheme(newTheme);
-  };
-
-  if (isLoading) {
-    return (
-      <div className="loading">
-        <div className="loading-spinner"></div>
-        <p>Loading your zine...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="error">
-        <h2>Oops! Something went wrong</h2>
-        <p>{error}</p>
-        <button onClick={() => window.location.reload()}>
-          Try Again
-        </button>
-      </div>
-    );
-  }
+  React.useEffect(() => {
+    const unsubscribe = sessionStore.subscribe(() => {
+      setSelectedIds(sessionStore.getSelectedIds());
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
-    <div style={{ background: currentTheme.background, fontFamily: currentTheme.fontFamily, minHeight: '100vh', minWidth: '100vw' }}>
-      <DragDropContext onDragEnd={handleDragEnd}>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      width: '100vw',
+      overflow: 'hidden',
+      fontFamily: 'Arial, sans-serif',
+    }}>
+      <Toolbar
+        sessionStore={sessionStore}
+        currentTool={currentTool}
+        onToolChange={handleToolChange}
+        onUndo={handleUndo}
+        onRedo={handleRedo}
+        canUndo={canUndo}
+        canRedo={canRedo}
+      />
+      
+      <div style={{
+        display: 'flex',
+        flex: 1,
+        overflow: 'hidden',
+      }}>
         <ZineCanvas
-          widgets={widgets}
-          editingWidget={editingWidget}
-          onEdit={handleEdit}
-          onSave={handleSave}
-          onCancel={handleCancel}
-          onDelete={handleDelete}
-          onThemeChange={handleThemeChange}
-          currentTheme={currentTheme}
+          documentStore={documentStore}
+          sessionStore={sessionStore}
+          commandManager={commandManager}
         />
-      </DragDropContext>
+        
+        <PropertiesPanel
+          documentStore={documentStore}
+          selectedIds={selectedIds}
+        />
+      </div>
     </div>
   );
 }
